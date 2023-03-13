@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="counter">
+        <!-- 使用双大括号取值 -->
+        <p>{{num}}</p>
+        <p>{{name}}</p>
+    </div>
+    <script>
+        // 入门应用 固定写法
+        const Counter={
+            data:function(){
+                return {
+                    num:0,
+                    name:"张三"
+                }
+            }
+        }
+
+        //创建vue应用并且挂载，mount会返回对象
+        let app = Vue.createApp(Counter).mount("#counter")
+        console.log(app)
+        //双向绑定数据，后台修改浏览器console中的值,页面也会跟着变化
+    </script>
+</body>
+</html>
