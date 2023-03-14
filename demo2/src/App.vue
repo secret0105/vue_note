@@ -6,23 +6,67 @@
 <script>
 //vue 2的写法，不使用setup
 
-export default{
-  data(){
+export default {
+  data() {
     return {
-      num:0,
-      name:"lisi",
-      msg:"<h2>标题</h2>",
-      id: "d1",
-      attrname: 'id',
-      mouseEvent:  "click"
+      num: 0,
+      message: 'hello vue123',
+      user:{
+        name:'zhangsan',
+        age:12
+      }
+
     }
   },
-  methods: {
-    changeName:function(){
-      this.name = "zhangsan"
+  computed: {
+    reverseMsg: {
+      set: function (newValue) {
+        //一般不用Set方法，当被设置或者依赖属性变化时，会调用
+        console.log(newValue);
+        this.message=newValue
+      },
+      get: function () {
+        return this.message.split("").reverse().join("")
+      }
+    }
+  },
+  //监听器
+  watch:{
+    //监听的属性
+    //当属性发生变化时，就会触发下面的方法
+    // message:function(newValue,oldValue){
+    //   console.log(newValue);
+    //   console.log(oldValue);
+
+    //   //可以写异步操作,ajax等
+    //   //对监听的数据进行判断
+    //   //但是这种写法不会在最开始的时候就判断，如果是从后端传数据，不会立即渲染
+    //   if(newValue.length<5 || newValue.length>10){
+    //     console.log('长度不能小于5或者大于10');
+    //   }
+    // }
+
+    
+    message:{
+      immediate:true,
+      handler:function(newValue){
+        if(newValue.length<5 || newValue.length>10){}
+          console.log('长度不能小于5或者大于10');
+      }
     },
-    changeColor:function(){
-      this.id = "d2"
+    //深度监听
+    //普通监听无法监听对象的属性
+    // user:function(newValue){
+    //   //当name属性变化时，不会输出任何结果
+    //   console.log(newValue);
+    // }
+
+    //深度监听会监听所有属性，开销大，使用字符串的方式
+    "user.name":{
+      handler:function(newValue){
+        console.log(newValue);
+      },
+      deep: true
     }
   }
 }
@@ -31,40 +75,15 @@ export default{
 
 <template>
   <div>
-    <!-- <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a> -->
-    <p>{{ num }}</p>
-    <p>{{ name }}</p>
-    <p v-once>{{ name }}</p>
-    <p>{{ msg }}</p>
-    <p v-html="msg"></p>
-    <!-- 这里使用了v-on的语法糖-->
-    <button @click="changeName">改变名字</button>
+    <p>{{ message }}</p>
 
-    <!-- v-bind 绑定属性 可以对属性进行运算操作-->
-    <p v-bind:id="id">hello vue</p>
-    <p :id="id">hello vue</p>
-    <!-- 简单的方法可以不使用函数 -->
-    <button v-on:click="changeColor">改变颜色</button>
-    <!-- <button v-on:click="id='d2'">改变颜色</button> -->
-
-    <!-- 使用js -->
-    <p>{{ name.split('').reverse().join('') }}</p>
-
-    <!-- 动态属性 较少使用  注意id也是上面定义的属性，而不是html属性-->
-    <p :[attrname]="id">测试动态属性</p>
-    <button @click="attrname='class'">改变属性</button>
-
-    <!-- 动态事件 -->
-    <!-- "volar.inlayHints.eventArgumentInInlineHandlers": false, 在settings.json 关闭@click event提示-->
-    <button @[mouseEvent]="attrname='class'">改变属性</button>
-    <button @click="mouseEvent='mouseover'">改变事件</button>
-
+    <button @click="message='nihao'">改变message</button>
     
+    <!-- v-model双向绑定 -->
+    <input type="text" v-model="message">
+    <br>
+    {{ user.name }}
+    <button @click="user.name='lisi'">更改对象属性</button>
   </div>
   <!-- <HelloWorld msg="Vite + Vue" /> -->
 </template>
@@ -76,9 +95,11 @@ export default{
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
@@ -86,10 +107,11 @@ export default{
 #d1 {
   color: red;
 }
+
 #d2 {
   color: blue;
 }
+
 .d1 {
   font-size: 30px;
-}
-</style>
+}</style>
