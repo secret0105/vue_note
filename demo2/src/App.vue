@@ -1,78 +1,36 @@
-<!-- <script setup>
-// import HelloWorld from './components/HelloWorld.vue'
-
-</script> -->
-
 <script>
-//vue 2的写法，不使用setup
-//引入子组件
-import Content from './components/Content.vue'
-import axios from 'axios'
-export default {
-  data() {
-    return {
-      message: "i am app.vue"
-    }
-  },
-  //注册组件
-  components: {
-    Content
-  },
-  methods: {
-    //定义方法接收子组件数据
-    //会有个默认值，从子组件处接收
-    getMsg(value) {
-      console.log(value);
-      this.message = value
+  //学习生命周期钩子函数
+  import ChildOne from './components/ChildOne.vue';
+  export default{
+    data(){
+      return{
+        msg:"hello parent",
+        isShow: true
+      }
     },
-    triggerJenins(){
-      const path = "http://192.168.0.103:8088/view/remote_test/job/test_01/buildWithParameters?token=123456&name=zhangsan"
-      axios.get(path)
-      
-    }
+    
 
-  },
-  //在生命周期函数中获取refs
-  mounted() {
-    //refs接收子组件和标签的ref属性
-    // console.log(this.$refs)
-    //直接访问子组件数据
-    // console.log(this.$refs.hello.a);
-  }
-
+    
+    components: { ChildOne }
 }
 
 </script>
 
 <template>
-    <!-- 使用子组件 -->
-    <div>
-      <h2>我是父组件APP中的message{{ message }}</h2>
-      <!-- 绑定事件，关联子组件事件，注意名字,不要弄混-->
-      <!-- ref 定义在子组件上 -->
-      <!-- <Content @changeMsg="getMsg" ref="hello"></Content> -->
-      <p ref="p"></p>
-      <!-- 每次调用都是新的对象，不会受到其他调用的同名组件的影响 -->
-      <!-- <Content></Content> -->
-      <!-- <Content></Content> -->
+  <!-- <ChildOne></ChildOne> -->
+  <p>{{ msg }}</p>
 
-      <!-- 插槽的用法 -->
-      <!-- <Content>我是用于content组件插槽的内容</Content> -->
-      <!-- 每个组件都可以使用单独的插槽内容，不会互相影响 -->
-      <!-- 可以传递多个标签内容 ，可以同时放到组件里面替换-->
+  <!-- 会触发beforeupdate 和updated方法 -->
+  <!-- 这个实例应该在子组件中执行 -->
+  <!-- <button @click="msg='haha'">改变父组件msg</button> -->
 
-      <!-- 具名化插槽 内容自动替换指定名称的插槽-->
-      <!-- 需要搭配template使用 -->
-      <!-- template需要放在子组件里面 -->
-        <Content>
-          <template v-slot:header><h1>我是具名插槽h1</h1></template>
-          <!-- v-slot加的是冒号-->
-          <!-- 只能选到父组件的属性，注意组件的作用域 -->
-          <template v-slot:button><button>我是具名插槽button + {{ message }}</button></template>
-      </Content>
-
-      <button @click="triggerJenins">触发jenkins构建</button>
-    </div>
+  <!-- 触发beforeunmout 和 unmounted -->
+  <!-- 只能触发子组件的 -->
+  <template v-if="isShow">
+    <ChildOne></ChildOne>
+  </template>
+  <!-- 第一次点击触发两个方法，第二次点击触发四个方法，包括create -->
+  <button @click="isShow=!isShow">触发unmount</button>
 
 </template>
 

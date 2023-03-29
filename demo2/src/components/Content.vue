@@ -13,7 +13,8 @@
                 message: 'hello',
                 msgc:"i am content param msgc",
                 persons:['zs','ls','ww'],
-                a: 10
+                a: 10,
+                names:[1,2,3,4,5]
             }
         },
         components:{
@@ -57,5 +58,13 @@
         <!-- 具名式插槽 -->
         <slot name="header"></slot>
         <slot name="button"></slot>
+
+        <!-- 指定插槽默认内容 -->
+        <slot name="ddd"><span>我是默认内容</span></slot>
+
+        <!-- 作用域插槽，向父组件传递数据 -->
+        <!-- 向父组件传递一个数组，然后在父组件中渲染出来 -->
+        <!-- 可以同时传递多个数据过去 -->
+        <slot :names="names"></slot>
     </div>
 </template>
