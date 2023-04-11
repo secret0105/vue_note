@@ -1,0 +1,9 @@
+<template>
+    <h2>样式一</h2>
+    <ol>
+        <li>tom</li>
+        <li>jerry</li>
+        <li>harry</li>
+        <li>potter</li>
+    </ol>
+</template>

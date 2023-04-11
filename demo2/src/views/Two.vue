@@ -1,0 +1,9 @@
+<template>
+    <h2>样式二</h2>
+    <ul>
+        <li>鼠</li>
+        <li>牛</li>
+        <li>虎</li>
+        <li>兔</li>
+    </ul>
+</template>
