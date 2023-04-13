@@ -14,6 +14,7 @@
   <RouterLink to="/">Home</RouterLink> | 
   <RouterLink to="/page">Page</RouterLink> | 
   <RouterLink to="/about">About</RouterLink> |
+  <RouterLink to="/news/123">News</RouterLink> | 
   <!-- 命名路由 -->
   <RouterLink :to="{name:'user',params:{id: 'zhangsan'}}">User</RouterLink>
 
