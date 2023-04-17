@@ -1,27 +1,21 @@
-<script setup>
-  // import Page from './views/Page.vue'
+<script>
+  // 学习状态管理
+  import store from './store'
+  import State from './views/State.vue'
 
-
+  export default {
+    provide:{
+      store
+    },
+    components:{
+      State
+    }
+  }
 </script>
 
 <template>  
+  <State />
 
-  <!-- 命名视图 -->
-  <RouterView name="Header"></RouterView>
-
-  <!-- 默认视图可以不写name -->
-  <RouterView></RouterView>
-  <RouterLink to="/">Home</RouterLink> | 
-  <RouterLink to="/page">Page</RouterLink> | 
-  <RouterLink to="/about">About</RouterLink> |
-  <RouterLink to="/news/123">News</RouterLink> | 
-  <!-- 命名路由 -->
-  <RouterLink :to="{name:'user',params:{id: 'zhangsan'}}">User</RouterLink>
-
-
-  
-  
-  <RouterView name="Footer"></RouterView>
 </template>
 
 <style scoped></style>
